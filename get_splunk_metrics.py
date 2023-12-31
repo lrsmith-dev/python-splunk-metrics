@@ -57,9 +57,9 @@ def runSplunkSearch(splunk_server, splunk_user="admin", splunk_password="passwor
           #print("DEBUG: Executing splunk search " + search)
           metricDict[search] = executeSplunkSearch(service,splunk_searches[search])
     else:
-        # TODO : Assume is comma separate list of all searches to run.
         #print("DEBUG: Executing specified splunk search")
         for search in searches.split(','):
+          #print("DEBUG: Executing splunk search " + search)
           metricDict[search] = executeSplunkSearch(service,splunk_searches[search])
 
     return metricDict 
@@ -83,6 +83,7 @@ if __name__ == "__main__":
 
     #metrics = runSplunkSearch(args.splunk_server,searches="index_size_bytes")
     #metrics = runSplunkSearch(args.splunk_server,searches="index_size_bytes,test")
+
     metrics = runSplunkSearch(args.splunk_server)
     for key,value in metrics.items():
         print(key + " : " + str(value) )
