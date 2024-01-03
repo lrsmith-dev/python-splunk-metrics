@@ -29,6 +29,7 @@ class MetricPoint:
     self.format = "opentsdb"
 
   # Print out the metric. Opentsdb is the default
+  # metric_name timestamp metric_value {tags}
   def __str__(self):
     tagString = ""
     for k,v in self.tags.items():

@@ -1,5 +1,15 @@
 # python-splunk-metrics
-Python code that can be run standalone, as a lambda, or Splunk App to collect and forward metrics.
+!Work In progress!
+
+Python code that can be run standalone, as a lambda, or Splunk App to collect and forward metrics. Currently CLI is being developed.
+
+# Examples
+
+```
+./splunk_metrics.py 
+index.size.bytes 1704182400 649 index=main host=localhost
+index.size.bytes 1704182400 18750994 index=test host=localhost
+```
 
 # Developement Setup
 
