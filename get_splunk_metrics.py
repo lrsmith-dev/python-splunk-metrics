@@ -15,11 +15,11 @@ import splunklib.client as client
 
 metrics = {
     "index.size.bytes" : {
-        "search": 'index=_internal source=*license_usage.log type="Usage" earliest=-1d@d | bucket _time span=1h | stats sum(b) as value by _time,idx' 
+        "search": 'index=_internal source=*license_usage.log type="Usage" earliest=-1d@d | bucket _time span=1h | rename idx as index | stats sum(b) as value by _time,index' 
     },
 }
 
-class Metric:
+class MetricPoint:
 
   def __init__(self, name, timestamp, value, tags):
     self.name = name
@@ -59,7 +59,7 @@ def executeSplunkSearch(service, splunk_search, host):
            name = splunk_search
            value = result.pop('value')
            result['host'] = host
-           resultList.append(Metric(name,timestamp,value,result))
+           resultList.append(MetricPoint(name,timestamp,value,result))
     return resultList
 
 
@@ -69,7 +69,7 @@ def runSplunkSearch(splunk_server, splunk_user=None, splunk_password=None, splun
     metricList = []
 
     if splunk_token is not None:
-      print("DEBUG : Authenticating with Splunk Token")
+      #print("DEBUG : Authenticating with Splunk Token")
       service = client.connect(host=splunk_server, port=8089,
                      splunkToken=splunk_token)
     else:
