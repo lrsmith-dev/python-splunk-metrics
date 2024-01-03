@@ -14,7 +14,7 @@ import splunklib.client as client
 # the the remaining fields will be turned into k/v pair
 
 metrics = {
-    "index.size.bytes" : {
+    "splunk.index.throughput.bytes" : {
         "search": 'index=_internal source=*license_usage.log type="Usage" earliest=-1d@d | bucket _time span=1h | eval timestamp = _time |rename idx as index | stats sum(b) as value by timestamp,index' 
     },
 }
