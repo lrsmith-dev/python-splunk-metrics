@@ -14,7 +14,8 @@ Local development was done leveraging the Splunk Docker Image.
 1. `python3 -m venv env`
 2. `source env/bin/activate`
 3. `pip3 install splunk-sdk`                # Install Splunk Python SDK
-4. `pip3 install wavefront-sdk-python`      # Install Wavefront Python SDK. Does not install/compile
+4. `pip3 install pytest`                    # Install pytest for tests 
+5. `pip3 install wavefront-sdk-python`      # Install Wavefront Python SDK. Does not install/compile
 
 ## VMWareVMware Aria Operations for Applications 
 
