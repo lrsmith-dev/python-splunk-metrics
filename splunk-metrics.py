@@ -15,7 +15,7 @@ import splunklib.client as client
 
 metrics = {
     "index.size.bytes" : {
-        "search": 'index=_internal source=*license_usage.log type="Usage" earliest=-1d@d | bucket _time span=1h | rename idx as index | stats sum(b) as value by _time,index' 
+        "search": 'index=_internal source=*license_usage.log type="Usage" earliest=-1d@d | bucket _time span=1h | eval timestamp = _time |rename idx as index | stats sum(b) as value by timestamp,index' 
     },
 }
 
@@ -52,11 +52,11 @@ def executeSplunkSearch(service, splunk_search, host):
     resultList = []
 
     # TODO : Wrap in try and skip any with errors. 
-    response = service.jobs.oneshot('search ' + metrics[splunk_search]['search'] , output_mode="json")
+    response = service.jobs.oneshot('search ' + metrics[splunk_search]['search'] , output_mode="json",count=0)
     reader = JSONResultsReader(response)
     for result in reader:
         if isinstance(result, dict):
-           timestamp = (datetime.strptime(result.pop("_time"), '%Y-%m-%dT%H:%M:%S.%f+00:00').date()).strftime('%s')
+           timestamp = result.pop('timestamp')
            name = splunk_search
            value = result.pop('value')
            result['host'] = host
